@@ -3,5 +3,5 @@ My mpi exercise code
 
 # Download
 ```
-git clone https://github.com/walkandthinker/MPILearn.git
+git clone https://github.com/yangbai90/MPILearn.git
 ```
