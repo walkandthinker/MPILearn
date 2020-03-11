@@ -40,17 +40,13 @@ int main(int args,char *argv[]){
 	alocal=a+rank*hlocal;
 	localresult=integral(alocal,num,h);
 
+	cout<<"result from rank-"<<rank+1<<" is:"<<localresult<<endl;
+	MPI_Barrier(MPI_COMM_WORLD);
 
+
+	MPI_Reduce(&localresult,&result,1,MPI_DOUBLE,MPI_SUM,0,MPI_COMM_WORLD);
 	if(rank==0){
-		result=localresult;
-		for(int i=1;i<size;++i){
-			MPI_Recv(&localresult,1,MPI_DOUBLE,i,tag,MPI_COMM_WORLD,&status);
-			result+=localresult;
-		}
-		cout<<"result is "<<result<<endl;
-	}
-	else {
-		MPI_Send(&localresult,1,MPI_DOUBLE,0,tag,MPI_COMM_WORLD);
+		cout<<" final result is:"<<result<<endl;
 	}
 
 	MPI_Finalize();
